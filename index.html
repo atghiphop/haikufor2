@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Haiku For Two - Immersive Experience</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: "Cambria", serif;
+        overflow-x: hidden;
+        background: #f9f9f9;
+        color: #333;
+    }
+
+    /* General Transitions */
+    .fade-in {
+        opacity: 0;
+        transition: opacity 1s ease;
+    }
+    .fade-in.show {
+        opacity: 1;
+    }
+
+    /* Full Page Sections */
+    section {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem;
+        text-align: center;
+    }
+
+    /* Scene 1: The Park */
+    #scene1 {
+        background: linear-gradient(to bottom, #ffcce0, #ffffff);
+        transition: background 2s ease;
+    }
+
+    /* Floating cherry blossoms */
+    .cherry-blossom {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background: pink;
+        border-radius: 50%;
+        opacity: 0.8;
+        animation: fall 5s linear infinite;
+    }
+
+    @keyframes fall {
+        0% { transform: translateY(-100vh) translateX(0);}
+        100% { transform: translateY(100vh) translateX(50px);}
+    }
+
+    /* Create multiple blossoms */
+    .cherry-blossom:nth-child(2) { left: 20%; animation-delay: 1s; }
+    .cherry-blossom:nth-child(3) { left: 40%; animation-delay: 2s; }
+    .cherry-blossom:nth-child(4) { left: 60%; animation-delay: 1.5s; }
+    .cherry-blossom:nth-child(5) { left: 80%; animation-delay: 3s; }
+
+    .content-box {
+        max-width: 600px;
+        background: rgba(255,255,255,0.6);
+        padding: 2rem;
+        border-radius: 8px;
+        backdrop-filter: blur(5px);
+    }
+
+    button {
+        background: #333;
+        color: #fff;
+        border: none;
+        padding: 0.8rem 1.2rem;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 1rem;
+        font-size: 1rem;
+    }
+
+    button:hover {
+        background: #555;
+    }
+
+    /* Scene 2: Closer Look at Noodles & City */
+    #scene2 {
+        background: linear-gradient(to bottom right, #f2d9c2, #ffffff);
+        display: none;
+    }
+
+    /* Scene 3: The Poetry Submission */
+    #scene3 {
+        background: #222;
+        color: #eee;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .poetry-form {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        max-width: 300px;
+        width: 90%;
+        margin-top: 1rem;
+    }
+
+    .poetry-form label {
+        margin: 0.5rem 0 0.2rem;
+    }
+
+    .poetry-form input, .poetry-form textarea {
+        width: 100%;
+        padding: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Scene 4: The Big Reveal */
+    #scene4 {
+        background: linear-gradient(to top, #000, #333);
+        display: none;
+        color: #fff;
+    }
+
+    .reveal-box {
+        max-width: 600px;
+        background: rgba(0,0,0,0.7);
+        padding: 2rem;
+        border-radius: 8px;
+    }
+
+    /* The mechanical reveal */
+    .mech-reveal {
+        margin-top: 1rem;
+        color: #f66;
+        font-size: 1.1rem;
+        display: none;
+    }
+
+    /* Ending Scene */
+    #scene5 {
+        background: linear-gradient(to top, #444, #111);
+        display: none;
+        color: #ddd;
+    }
+
+    .end-message {
+        max-width: 500px;
+        background: rgba(255,255,255,0.1);
+        padding: 2rem;
+        border-radius: 8px;
+    }
+
+</style>
+</head>
+<body>
+
+<!-- SCENE 1 -->
+<section id="scene1">
+    <div class="cherry-blossom"></div>
+    <div class="cherry-blossom"></div>
+    <div class="cherry-blossom"></div>
+    <div class="cherry-blossom"></div>
+    <div class="cherry-blossom"></div>
+    <div class="content-box fade-in" id="s1-text">
+        <h1>Haiku For Two</h1>
+        <p>Toshi loved the noodle girl. He didn’t just like her. He LOVED her. Under the cherry blossoms, he watches her stall from afar, day after day.</p>
+        <button id="s1-next">Next</button>
+    </div>
+</section>
+
+<!-- SCENE 2 -->
+<section id="scene2">
+    <div class="content-box fade-in" id="s2-text">
+        <p>The summer heat, the cramped coffin apartment, his meager bento. He cannot afford even a bowl of her noodles. He dreams of taking her on a swan boat, of one day speaking with her. But in a world mediated by screens, how does one approach?</p>
+        <button id="s2-next">Next</button>
+    </div>
+</section>
+
+<!-- SCENE 3: Poetry Submission -->
+<section id="scene3">
+    <div class="content-box fade-in" id="s3-text">
+        <h2>"Poetry Love or Hate"</h2>
+        <p>A national phenomenon. Each day at 3 PM, one poet can find true love—or heartbreak—live before millions. Toshi knows this is his chance. He must submit a haiku before time runs out.</p>
+        <div class="poetry-form" id="poetry-form">
+            <label>Photo of your muse (Noodle Girl):</label>
+            <input type="text" placeholder="(Imagine a URL)" />
+            <label>Your Haiku (5-7-5):</label>
+            <textarea placeholder="You are noodle girl..."></textarea>
+            <button id="s3-submit">Submit</button>
+        </div>
+    </div>
+</section>
+
+<!-- SCENE 4: The Live Show and Reveal -->
+<section id="scene4">
+    <div class="reveal-box fade-in" id="s4-text">
+        <h2>Live on the Air</h2>
+        <p>Mrs. Gamshaw ambushes the noodle stall. Cameras everywhere. Toshi steps forward, trembling.</p>
+        <p>Toshi reads:</p>
+        <p><em>"You are noodle girl<br>
+        I am no one you should know<br>
+        I feel for you LOVE"</em></p>
+        <p class="mech-reveal" id="mech-reveal">
+            The noodle girl is revealed to be part of the cart—mechanical, not human. Wires and gears where a heart should be.
+        </p>
+        <button id="s4-next">Continue</button>
+    </div>
+</section>
+
+<!-- SCENE 5: Aftermath -->
+<section id="scene5">
+    <div class="end-message fade-in" id="s5-text">
+        <h2>The Aftermath</h2>
+        <p>Toshi’s heartbreak is national entertainment. The crowd disperses. Tomorrow, another poet. Another story. Toshi is left alone, emptiness where love once dwelled.</p>
+        <p>A quiet emptiness. The stump is empty. The noodle cart is gone. Only the memory remains.</p>
+        <p>End of Experience.</p>
+    </div>
+</section>
+
+
+<script>
+    // Simple scene transitions and text reveals
+    let currentScene = 1;
+
+    const s1Next = document.getElementById('s1-next');
+    const s2Next = document.getElementById('s2-next');
+    const s3Submit = document.getElementById('s3-submit');
+    const s4Next = document.getElementById('s4-next');
+
+    const scene1 = document.getElementById('scene1');
+    const scene2 = document.getElementById('scene2');
+    const scene3 = document.getElementById('scene3');
+    const scene4 = document.getElementById('scene4');
+    const scene5 = document.getElementById('scene5');
+
+    const s1Text = document.getElementById('s1-text');
+    const s2Text = document.getElementById('s2-text');
+    const s3Text = document.getElementById('s3-text');
+    const s4Text = document.getElementById('s4-text');
+    const mechReveal = document.getElementById('mech-reveal');
+    const s5Text = document.getElementById('s5-text');
+
+    // Fade in initial text
+    window.addEventListener('load', () => {
+        s1Text.classList.add('show');
+    });
+
+    s1Next.addEventListener('click', () => {
+        // Move to scene2
+        scene1.style.display = 'none';
+        scene2.style.display = 'flex';
+        setTimeout(() => s2Text.classList.add('show'), 100);
+    });
+
+    s2Next.addEventListener('click', () => {
+        // Move to scene3
+        scene2.style.display = 'none';
+        scene3.style.display = 'flex';
+        setTimeout(() => s3Text.classList.add('show'), 100);
+    });
+
+    s3Submit.addEventListener('click', () => {
+        // Move to scene4 (assume submission success)
+        scene3.style.display = 'none';
+        scene4.style.display = 'flex';
+        setTimeout(() => s4Text.classList.add('show'), 100);
+
+        // Reveal mechanical after a pause
+        setTimeout(() => {
+            mechReveal.style.display = 'block';
+        }, 4000);
+    });
+
+    s4Next.addEventListener('click', () => {
+        // Move to scene5
+        scene4.style.display = 'none';
+        scene5.style.display = 'flex';
+        setTimeout(() => s5Text.classList.add('show'), 100);
+    });
+</script>
+
+</body>
+</html>
